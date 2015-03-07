@@ -2,6 +2,10 @@
 
 ## Log
 
+###  104.03.08
+
+* Create Hadoop.md	
+
 ###  104.03.07 
 
 * Rename HadoopCookieBook.md to HadoopCookBook.md
