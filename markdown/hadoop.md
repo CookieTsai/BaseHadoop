@@ -12,9 +12,9 @@ java -version
 dpkg --get-selections | grep java
 update-alternatives --config java    # 確認java的安裝路徑
 
-# 替換群組 java（提供 /usr/bin/java）只有一個替換項目：
-# /usr/lib/jvm/java-7-openjdk-i386/jre/bin/java
-# 無可設定。
+替換群組 java（提供 /usr/bin/java）只有一個替換項目：
+/usr/lib/jvm/java-7-openjdk-i386/jre/bin/java
+無可設定。
 ```
 
 ## 建置 SSH
