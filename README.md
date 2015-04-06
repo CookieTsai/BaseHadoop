@@ -2,6 +2,10 @@
 
 ## Log
 
+### 104.04.06
+
+* mkdir pptx and Create Hadoop.pptx
+
 ###  104.03.08
 
 * Create Hadoop.md	
