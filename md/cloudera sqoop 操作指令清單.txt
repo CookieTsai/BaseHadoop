@@ -1,0 +1,28 @@
+#cloudera sqoop 操作指令清單
+
+#匯入 jdbc
+sudo cp sqljdbc4.jar /usr/lib/sqoop/lib/
+
+sqoop import --connect "jdbc:sqlserver://10.120.28.5:1433;databaseName=news_project201501091930" \
+--username sa --password iii123456 --table tmp_newsallkeyword -m 1
+
+#刪除檔案
+hadoop fs -rm newsallkeyword/*
+hadoop fs -rm newsallkeyword/_logs/history/*
+hadoop fs -rmdir newsallkeyword/_logs/history
+hadoop fs -rmdir newsallkeyword/_logs/
+hadoop fs -rmdir newsallkeyword/
+
+sqoop export --connect "jdbc:sqlserver://10.120.28.5:1433;databaseName=news_project201501091930" \
+--username sa --password iii123456 --table tmp_relationkey -m 1 \
+--export-dir tmp_step2 --input-fields-terminated-by ","
+
+
+
+hadoop jar Sample.jar org.test.sample.step1.Step1Driver tmp_newsallkeyword tmp_step1
+
+hadoop jar Sample.jar org.test.sample.step2.Step2Driver tmp_step1_1 tmp_step2_1
+sqoop export --connect "jdbc:sqlserver://10.120.28.5:1433;databaseName=news_project201501091930" --username sa --password iii123456 --table tmp_relationkey -m 1 --export-dir tmp_step2_1 --input-fields-terminated-by ","
+
+
+
