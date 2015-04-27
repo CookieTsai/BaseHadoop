@@ -44,7 +44,7 @@ sudo cp -r hadoop-2.4.0 /usr/local/hadoop # TODO 更改為mv
 
 ``` ~/.bashrc
 #HADOOP VARIABLES START
-export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386 ## 須確認電腦中的版本
 export HADOOP_INSTALL=/usr/local/hadoop
 export PATH=$PATH:$HADOOP_INSTALL/bin
 export PATH=$PATH:$HADOOP_INSTALL/sbin
@@ -144,8 +144,8 @@ sudo vim /usr/local/hadoop/etc/hadoop/hdfs-site.xml
 ```
 
 ```
-chown -R hadoop:hadoop /usr/local/hadoop_store
-chown -R hadoop:hadoop /usr/local/hadoop
+chown -R {UserName}:{UserName} /usr/local/hadoop_store
+chown -R {UserName}:{UserName} /usr/local/hadoop
 ```
 
 ## 啟動 Apache Hadoop
