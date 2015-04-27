@@ -6,6 +6,7 @@
 ### 104.04.27
 
 * add md/Cloudera Sqoop 操作指令清單.md
+* update md/hadoop.md
 
 ### 104.04.06
 
