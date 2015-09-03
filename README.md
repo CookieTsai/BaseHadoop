@@ -1,5 +1,12 @@
 # Read Me
 
+
+## What is Apache Hadoop
+
+* 是一個 『 Java Project 』
+* 是一套 『 Software base on Linux 』
+* 是一種 『 File System 』
+
 ## Log
 
 

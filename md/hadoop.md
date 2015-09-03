@@ -34,8 +34,9 @@
 
 > 修改 ~/.bashrc
 
-	#HADOOP VARIABLES START
-	export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386 ## 須確認電腦中的版本
+	# HADOOP VARIABLES START
+	
+	export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386（須確認電腦中的版本）
 	export HADOOP_INSTALL=/usr/local/hadoop
 	export PATH=$PATH:$HADOOP_INSTALL/bin
 	export PATH=$PATH:$HADOOP_INSTALL/sbin
@@ -45,21 +46,28 @@
 	export YARN_HOME=$HADOOP_INSTALL
 	export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_INSTALL/lib/native
 	export HADOOP_OPTS="-Djava.library.path=$HADOOP_INSTALL/lib"
-	#HADOOP VARIABLES END
+	
+	# HADOOP VARIABLES END
 
 > 讓新設定的環境變數生效
 
 	$ source ~/.bashrc
 
-> 修改 hadoop-env.sh (非必要可以不用做)
+> 修改 hadoop-env.sh（非必要，不一定要做）
 
 	$ sudo vim /usr/local/hadoop/etc/hadoop/hadoop-env.sh
 	
-	$ export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386 ## 須確認電腦中的版本
-
+> 修改 hadoop-env.sh 內容如下（非必要，不一定要做）
+	
+	# 僅增修 JAVA_HOME 內容，其他不動
+	
+	export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386（須確認電腦中的版本）
+	
 > 修改 core-site.xml
 
 	$ sudo vim /usr/local/hadoop/etc/hadoop/core-site.xml
+	
+> 修改 core-site.xml 內容如下
 
 	<configuration>
 		<property>
@@ -68,10 +76,11 @@
 		</property>
 	</configuration>
 
-
-> 修改 yarn-site.xml
+> 編輯 yarn-site.xml
 
 	$ sudo vim /usr/local/hadoop/etc/hadoop/yarn-site.xml 
+	
+> 修改 yarn-site.xml 內容如下
 
 	<configuration>
 		<property>
@@ -88,6 +97,8 @@
 
 	$ sudo cp /usr/local/hadoop/etc/hadoop/mapred-site.xml.template /usr/local/hadoop/etc/hadoop/mapred-site.xml
 	$ sudo vim /usr/local/hadoop/etc/hadoop/mapred-site.xml
+
+> 修改 mapred-site.xml 內容如下
 	
 	<configuration>
 		<property>
@@ -96,11 +107,16 @@
 		</property>
 	</configuration>
 
-> 修改 hdfs-site.xml
+> 建立 namenode 及 datanode 目錄
 
 	$ sudo mkdir -p /usr/local/hadoop_store/hdfs/namenode
 	$ sudo mkdir -p /usr/local/hadoop_store/hdfs/datanode
+
+> 編輯 hdfs-site.xml
+
 	$ sudo vim /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+
+> 修改 hdfs-site.xml 內容如下
 
 	<configuration>
 		<property>
@@ -117,7 +133,7 @@
 		</property>
 	</configuration>
 
-> 修改資料夾權限
+> 修改資料夾權限（檔案權限須與執行『 啟動 Apache Hadoop 』的身份相同）
 
 	$ chown -R {UserName}:{UserName} /usr/local/hadoop_store
 	$ chown -R {UserName}:{UserName} /usr/local/hadoop
