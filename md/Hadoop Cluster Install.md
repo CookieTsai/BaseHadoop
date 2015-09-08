@@ -1,5 +1,5 @@
 	注意事項：
-		1. 以下所有指令皆使用 root 身份執行，僅供練習使用。
+		1. 所有指令皆使用 root 身份執行，僅供練習使用。
 		2. 前置步驟在 master, slaver1, slaver2 都必須做一遍。
 		3. PDF 格式部分文字會失真，輸入時請注意符號是否正確。
 
@@ -16,7 +16,7 @@
 | Oracle Java      | jdk-7u79-linux-x64.rpm            | /user/java/java       | 7           |
 | Apache Hadoop    | hadoop-2.4.1.tar.gz               | /opt/hadoop           | 2.4.1       |
 | Apache HBase     | hbase-0.98.13-hadoop2-bin.tar.gz  | /opt/hbase            | 0.98.13     |
-| Apache Hive      | apache-hive-1.2.1-bin.tar.gz      | /opt/hive             | 1.2.1       |
+| Apache Hive      | apache-hive-1.0.1-bin.tar.gz      | /opt/hive             | 1.2.1       |
 | Apache Zookeeper | zookeeper-3.4.6.tar.gz            | /opt/zookeeper        | 3.4.6       |
 
 [TOP](#toc_0)
@@ -99,9 +99,9 @@
 
 #### 解壓縮並建立連結
 
-	$ tar -zxvf /tmp/hadoop-2.2.0.tar.gz
-	$ mv /tmp/hadoop-2.2.0 /opt
-	$ ln -s /opt/hadoop-2.2.0 /opt/hadoop
+	$ tar -zxvf /tmp/hadoop-2.4.1.tar.gz
+	$ mv hadoop-2.4.1 /opt
+	$ ln -s /opt/hadoop-2.4.1 /opt/hadoop
 	
 #### 建立 Hadoop 暫存目錄
 
@@ -167,7 +167,7 @@
 	
 #### 編輯 hdfs-site.xml
 
-	$ $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+	$ vim $HADOOP_HOME/etc/hadoop/hdfs-site.xml
 	
 > 覆蓋內容
 > 
@@ -175,7 +175,7 @@
 	<configuration>
 	   <property>
 	      <name>dfs.replication</name>
-	      <value>2</value>
+	      <value>1</value>
 	   </property>
 	   <property>
 	      <name>dfs.permissions</name>
@@ -185,7 +185,7 @@
 	
 #### 編輯 mapred-site.xml
 
-	$ $HADOOP_HOME/etc/hadoop/mapred-site.xml
+	$ vim $HADOOP_HOME/etc/hadoop/mapred-site.xml
 	
 > 覆蓋內容
 > 
@@ -199,7 +199,7 @@
 
 #### 編輯 yarn-site.xml
 
-	$ $HADOOP_HOME/etc/hadoop/yarn-site.xml
+	$ vim $HADOOP_HOME/etc/hadoop/yarn-site.xml
 	
 > 覆蓋內容
 > 
@@ -218,6 +218,14 @@
 	      <value>org.apache.hadoop.mapred.ShuffleHandler</value>
 	   </property>
 	</configuration>
+	
+#### 編輯 hadoop-env.sh
+
+	$ vim $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+	
+> 修改內容
+> 
+	export JAVA_HOME=/usr/java/java
 	
 #### Copy to slavers
 
@@ -258,7 +266,7 @@
 #### 解壓縮並建立連結
 
 	$ tar -zxvf /tmp/zookeeper-3.4.6.tar.gz
-	$ mv /tmp/zookeeper-3.4.6 /opt
+	$ mv zookeeper-3.4.6 /opt
 	$ ln -s /opt/zookeeper-3.4.6 /opt/zookeeper
 
 #### 編輯 profile
@@ -305,18 +313,9 @@
 #### 解壓縮並建立連結
 
 	$ tar -zxvf /tmp/hbase-0.98.13-hadoop2-bin.tar.gz
-	$ mv /tmp/hbase-0.98.13-hadoop2 /opt
+	$ mv hbase-0.98.13-hadoop2 /opt
 	$ ln -s /opt/hbase-0.98.13-hadoop2 /opt/hbase
 
-#### 編輯 regionservers
-
-	$ vim $HBASE_HOME/conf/regionservers
-
-> 增加內容
-> 
-	slaver1
-	slaver2
-	
 #### 編輯 profile
 
 	$ vim /etc/profile
@@ -329,13 +328,23 @@
 #### 載入 profile
 
 	$ source /etc/profile
+
+#### 編輯 regionservers
+
+	$ vim $HBASE_HOME/conf/regionservers
+
+> 增加內容
+> 
+	slaver1
+	slaver2
 	
 #### 編輯 hbase-env.sh
 
 	$ vim $HBASE_HOME/conf/hbase-env.sh
 	
-> 修改內容
+> 增加內容
 > 
+	export JAVA_HOME=/usr/java/java
 	export HBASE_MANAGES_ZK=false
 	
 #### 編輯 hbase-site.xml
@@ -366,7 +375,7 @@
 	
 #### Remove hbase's log4j (bug)
 
-	rm -rf /opt/hbase/lib/slf4j-log4j12-1.6.4.jar
+	rm -rf $HBASE_HOME/lib/slf4j-log4j12-1.6.4.jar
 
 #### Copy to slavers
 
@@ -387,9 +396,9 @@
 
 #### 解壓縮並建立連結
 
-	$ tar -zxvf /tmp/apache-hive-1.2.1-bin.tar.gz
-	$ mv /tmp/apache-hive-1.2.1-bin /options
-	$ ln -s /opt/apache-hive-1.2.1-bin /opt/hive
+	$ tar -zxvf /tmp/apache-hive-1.0.1-bin.tar.gz
+	$ mv apache-hive-1.0.1-bin /opt
+	$ ln -s /opt/apache-hive-1.0.1-bin /opt/hive
 	
 #### 編輯 profile
 
@@ -403,6 +412,13 @@
 #### 載入 profile
 
 	$ source /etc/profile
+	
+#### HDFS 上建立資料夾
+
+	$ hadoop fs -mkdir /tmp
+	$ hadoop fs -mkdir -p /user/hive/warehouse
+	$ hadoop fs -chmod g+w /tmp
+	$ hadoop fs -chmod g+w /user/hive/warehouse
 		
 [TOP](#toc_0)
 
