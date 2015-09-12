@@ -16,7 +16,7 @@
 | Oracle Java      | jdk-7u79-linux-x64.rpm            | /user/java/java       | 7           |
 | Apache Hadoop    | hadoop-2.4.1.tar.gz               | /opt/hadoop           | 2.4.1       |
 | Apache HBase     | hbase-0.98.13-hadoop2-bin.tar.gz  | /opt/hbase            | 0.98.13     |
-| Apache Hive      | apache-hive-1.0.1-bin.tar.gz      | /opt/hive             | 1.2.1       |
+| Apache Hive      | apache-hive-1.0.1-bin.tar.gz      | /opt/hive             | 1.0.1       |
 | Apache Zookeeper | zookeeper-3.4.6.tar.gz            | /opt/zookeeper        | 3.4.6       |
 
 [TOP](#toc_0)
