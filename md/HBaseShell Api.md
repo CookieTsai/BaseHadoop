@@ -135,20 +135,23 @@
 
 	* Body
 
+<pre>
 			{
 			  	"data": {
 					"rows": {
 						"{Row Key}": {
-			      			"Column Name 1": "value",
-							"Column Name 2": "value",
+			      			"Column Name 1": <font color="#69F">"value"</font>,
+							"Column Name 2": <font color="#69F">"value"</font>,
 			      			...
-							"Column Name n": "value"
+							"Column Name n": <font color="#69F">"value"</font>
 			    		}
 					}
 			  	},
-			  	"code": 0,
-			  	"success": true
+			  	"code": <font color="orange">0</font>,
+			  	"success": <font color="#696">true</font>
 			}
+			
+</pre>
 
 ## Delete
 
