@@ -44,19 +44,21 @@
 
 			{
 				"data": {
-					"Row Key 1": {
-			      		"Column Name 1": "value",
-			      		"Column Name 2": "value",
-			      		...
-			      		"Column Name n": "value"
-			    	},
-			    	...
-			    	"Row Key n": {
-			      		"Column Name 1": "value",
-			      		"Column Name 2": "value",
-			      		...
-			      		"Column Name n": "value"
-			    	}
+					"rows": {
+						"Row Key 1": {
+			      			"Column Name 1": "value",
+							"Column Name 2": "value",
+			      			...
+							"Column Name n": "value"
+			    		},
+						...
+						"Row Key n": {
+			      			"Column Name 1": "value",
+			      			"Column Name 2": "value",
+							...
+							"Column Name n": "value"
+						}
+					}
 			  	}
 			}
 
@@ -75,7 +77,7 @@
 ### GET /scan/tables/{Table Name}{?start, stop, columns, reserved, filter}
 
 	注意事項：
-		1. 如 limit 大於 100 將視為 100
+		1. 如 limit 大於 3000 將視為 3000
 
 * Request
 	* Parameters
@@ -96,19 +98,21 @@
 
 			{
 				"data": {
-					"Row Key 1": {
-			      		"Column Name 1": "value",
-			      		"Column Name 2": "value",
-			      		...
-			      		"Column Name n": "value"
-			    	},
-			    	...
-			    	"Row Key n": {
-			      		"Column Name 1": "value",
-			      		"Column Name 2": "value",
-			      		...
-			      		"Column Name n": "value"
-			    	}
+					"rows": {
+						"Row Key 1": {
+			      			"Column Name 1": "value",
+							"Column Name 2": "value",
+			      			...
+							"Column Name n": "value"
+			    		},
+						...
+						"Row Key n": {
+			      			"Column Name 1": "value",
+			      			"Column Name 2": "value",
+							...
+							"Column Name n": "value"
+						}
+					}
 			  	},
 			  	"code": 0,
 			  	"success": true
@@ -133,10 +137,14 @@
 
 			{
 			  	"data": {
-			    	"Column Name 1": "value",
-			    	"Column Name 2": "value",
-			    	...
-			    	"Column Name n": "value"
+					"rows": {
+						"{Row Key}": {
+			      			"Column Name 1": "value",
+							"Column Name 2": "value",
+			      			...
+							"Column Name n": "value"
+			    		}
+					}
 			  	},
 			  	"code": 0,
 			  	"success": true
