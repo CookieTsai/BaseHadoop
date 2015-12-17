@@ -16,7 +16,7 @@
 | Oracle Java      | jdk-7u79-linux-x64.rpm            | /user/java/java       | 7           |
 | Apache Hadoop    | hadoop-2.4.1.tar.gz               | /opt/hadoop           | 2.4.1       |
 | Apache HBase     | hbase-0.98.13-hadoop2-bin.tar.gz  | /opt/hbase            | 0.98.13     |
-| Apache Hive      | apache-hive-1.0.1-bin.tar.gz      | /opt/hive             | 1.0.1       |
+| Apache Hive      | apache-hive-1.2.1-bin.tar.gz      | /opt/hive             | 1.2.1       |
 | Apache Zookeeper | zookeeper-3.4.6.tar.gz            | /opt/zookeeper        | 3.4.6       |
 
 [TOP](#toc_0)
@@ -25,9 +25,9 @@
 
 | OS            | IP             | Host Name    |
 | :-----------: | :------------: | :----------: |
-| CentOS 6.7    | 192.168.60.100 | master       |
-| CentOS 6.7    | 192.168.60.101 | slaver1      |
-| CentOS 6.7    | 192.168.60.102 | slaver2      |
+| CentOS 6.7    | 192.168.60.101 | master       |
+| CentOS 6.7    | 192.168.60.102 | slaver1      |
+| CentOS 6.7    | 192.168.60.103 | slaver2      |
 
 [TOP](#toc_0)
 
@@ -113,9 +113,9 @@
 
 > 增加內容
 > 
-	192.168.60.100 master 
-	192.168.60.101 slaver1 
-	192.168.60.102 slaver2
+	192.168.60.101 master 
+	192.168.60.102 slaver1 
+	192.168.60.103 slaver2
 	
 #### 編輯 profile
 
@@ -133,6 +133,8 @@
 	export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 	export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 	export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
+	## HADOOP-9450
+	export HADOOP_USER_CLASSPATH_FIRST=true
 	
 #### 載入 profile
 
@@ -259,7 +261,7 @@
 
 [TOP](#toc_0)
 
-## Zookeeper
+## Apache Zookeeper
 
 ### 安裝 ZooKeeper
 
@@ -396,9 +398,9 @@
 
 #### 解壓縮並建立連結
 
-	$ tar -zxvf /tmp/apache-hive-1.0.1-bin.tar.gz
-	$ mv apache-hive-1.0.1-bin /opt
-	$ ln -s /opt/apache-hive-1.0.1-bin /opt/hive
+	$ tar -zxvf /tmp/apache-hive-1.2.1-bin.tar.gz
+	$ mv apache-hive-1.2.1-bin /opt
+	$ ln -s /opt/apache-hive-1.2.1-bin /opt/hive
 	
 #### 編輯 profile
 
@@ -417,9 +419,24 @@
 
 	$ hadoop fs -mkdir /tmp
 	$ hadoop fs -mkdir -p /user/hive/warehouse
-	$ hadoop fs -chmod g+w /tmp
-	$ hadoop fs -chmod g+w /user/hive/warehouse
+	
+#### 更改資料夾權限
+	
+	$ hadoop fs -chmod -R 777 /tmp
+	$ hadoop fs -chmod -R 777 /user/hive/warehouse
+	
+#### 啟動 hiveserver2
+
+	$ hiveserver2 &
+
+#### 連線方式（新版）
+	
+	$ beeline -u jdbc:hive2://master:10000
 		
+#### 連線方式（傳統 可不用啟動 hiveserver2）
+
+	$ hive
+	
 [TOP](#toc_0)
 
 
