@@ -3,8 +3,6 @@
 		2. 前置步驟在 master, slaver1, slaver2 都必須做一遍。
 		3. PDF 格式部分文字會失真，輸入時請注意符號是否正確。
 
-# Hadoop + HBase + Hive 建置手冊（完全分布式）
-
 ## 目錄
 
 [toc]
@@ -123,7 +121,7 @@
 
 > 增加內容
 > 
-	export HADOOP_HOME=/opt/hadoop/
+	export HADOOP_HOME=/opt/hadoop
 	export HADOOP_MAPRED_HOME=$HADOOP_HOME
 	export HADOOP_COMMON_HOME=$HADOOP_HOME
 	export HADOOP_HDFS_HOME=$HADOOP_HOME
@@ -135,6 +133,9 @@
 	export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
 	## HADOOP-9450
 	export HADOOP_USER_CLASSPATH_FIRST=true
+	## Add 2016/03/14
+	export HADOOP_YARN_HOME=$HADOOP_HOME
+	export HADOOP_PREFIX=$HADOOP_HOME
 	
 #### 載入 profile
 
@@ -225,16 +226,17 @@
 
 	$ vim $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 	
-> 修改內容
+> 增修內容
 > 
 	export JAVA_HOME=/usr/java/java
+	export HADOOP_LOG_DIR=/opt/hadoop/logs
 	
 #### Copy to slavers
 
 	$ scp -rp /opt/hadoop slaver1:/opt
 	$ scp -rp /opt/hadoop slaver2:/opt
-	$ scp –rp /etc/hosts slaver1:/etc
-	$ scp –rp /etc/hosts slaver2:/etc
+	$ scp -rp /etc/hosts slaver1:/etc
+	$ scp -rp /etc/hosts slaver2:/etc
 	$ scp -rp /etc/profile root@slaver1:/etc
 	$ scp -rp /etc/profile root@slaver2:/etc
 
@@ -335,7 +337,7 @@
 
 	$ vim $HBASE_HOME/conf/regionservers
 
-> 增加內容
+> 覆蓋內容
 > 
 	slaver1
 	slaver2
@@ -432,10 +434,6 @@
 #### 連線方式（新版）
 	
 	$ beeline -u jdbc:hive2://master:10000
-		
-#### 連線方式（傳統 可不用啟動 hiveserver2）
-
-	$ hive
 	
 [TOP](#toc_0)
 
