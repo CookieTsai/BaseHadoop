@@ -1,6 +1,7 @@
 ```
 注意事項：
 	1. 內容可自行參考使用
+	2. 全文皆為小編自行設計無參考
 ```
 
 ## 目錄
@@ -9,7 +10,16 @@
 
 ## 前言
 
+**2016.04.10**
+
 在編寫手記時偶而會需要放入一些插圖，常常覺得要找一個可以擺放「圖片」的空間是一件很麻煩的事情，即便找到可能有一天就會失效。這樣除了要管理自己電腦裡的團片，還要管理網路上的圖片相當麻煩。這兩天剛好參考到幾篇文章發現可以將圖片轉換成 base64的字串，這個效果還可以應用在網頁上，讓圖片直接跟著文章走，只要能找到文章就一定有圖，在管理時使用 Git 也變得相當方便，在這邊主要是講如何手動製作這樣的一個可以放在網頁上的 Img 標籤。
+
+**2016.04.21 新增 url2base64ImgTag**
+
+今天小編自己在使用的時候忽然發現圖片位置在網路上不再自己的電腦中，所以就在寫了一隻可以直接從網址轉換成 ImgTag 的方法，同時補上平日小編常用的 pbcopy。
+
+P.S. pbcopy 功能為將 pipe 傳入的內容複製起來這樣就可以直接貼上了，十分便利！！<br/>
+（此功能 Mac 有其他作業系統小編不太肯定）
 
 ## 成果
 
@@ -34,9 +44,17 @@ data:image/jpeg;base64,/9j/4AAQSk....（略）
 在 ~/.base_profile 增加以下內容
 
 ```
+# 檔案轉 Img Tag
 function pic2base64ImgTag {
     ext=$(echo $1 | perl -ne 'print "$1" if /([^.]+)$/')
     data=$(cat $1 | base64)
+    echo "<img src='data:image/$ext;base64,$data' />"
+}
+
+# 網址轉 Img Tag
+function url2base64ImgTag {
+    ext=$(echo $1 | perl -ne 'print "$1" if /([^.]+)$/')
+    data=$(curl -s -k $1 | base64)
     echo "<img src='data:image/$ext;base64,$data' />"
 }
 ```
@@ -46,10 +64,26 @@ function pic2base64ImgTag {
 在 Terminal 中執行以下指令
 
 ```
-$ pic2base64ImgTag ${圖片路徑}
+$ pic2base64ImgTag ${圖片的檔案路徑}
 ```
 
-Example：```$ pic2base64ImgTag pic.jpeg```
+或
+
+```
+$ url2base64ImgTag ${圖片的網址}
+```
+
+Normal Example：
+
+* `$ pic2base64ImgTag pic.jpeg`
+* `$ url2base64ImgTag http://goo.gl/NTovPj`
+
+Normal + pbcopy Example：
+
+* `$ pic2base64ImgTag pic.jpeg | pbcopy`
+* `$ url2base64ImgTag http://goo.gl/NTovPj | pbcopy`
+
+P.S. 網址僅作參考，有使用 Google 短網址服務可能會失效。
 
 ### 輸出
 
