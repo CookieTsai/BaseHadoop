@@ -30,8 +30,8 @@ import java.io.FileNotFoundException;
 import java.util.Properties;
 
 public class GMailSender {
-    private static final String USER_NAME = "noreply.netcat@gmail.com";
-    private static final String PASSWORD = "!QAZ2wsx#EDC";
+    private static final String USER_NAME = "";
+    private static final String PASSWORD = "";
 
     private static Session SESSION;
 
